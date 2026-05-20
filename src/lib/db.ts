@@ -30,7 +30,7 @@ function initSchema(db: Database.Database) {
       welcome_message TEXT NOT NULL DEFAULT 'Join us as we begin our journey together',
       hashtag TEXT NOT NULL DEFAULT '#ThushanWedsDharshi',
       rsvp_deadline TEXT NOT NULL DEFAULT '2026-05-01',
-      updated_at TEXT DEFAULT (datetime(''now''))
+      updated_at TEXT DEFAULT (datetime('now'))
     );
 
     CREATE TABLE IF NOT EXISTS admins (
