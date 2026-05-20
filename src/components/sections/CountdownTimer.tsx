@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from 'react';
 
-interface TimeLeft { days: number; hours: number; minutes: number; seconds: number; }
+interface T { days: number; hours: number; minutes: number; seconds: number; }
 
 export default function CountdownTimer({ targetDate }: { targetDate: string }) {
-  const [t, setT] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [t, setT] = useState<T>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    function calc() {
+    function calc(): T {
       const diff = new Date(targetDate).getTime() - Date.now();
       if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
       return {
-        days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours:   Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / 1000 / 60) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
+        days:    Math.floor(diff / 86400000),
+        hours:   Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
       };
     }
     setT(calc());
@@ -24,35 +24,27 @@ export default function CountdownTimer({ targetDate }: { targetDate: string }) {
   }, [targetDate]);
 
   const units = [
-    { label: 'Days',    value: t.days    },
-    { label: 'Hours',   value: t.hours   },
+    { label: 'Days',    value: t.days },
+    { label: 'Hours',   value: t.hours },
     { label: 'Minutes', value: t.minutes },
     { label: 'Seconds', value: t.seconds },
   ];
 
   return (
-    <div className="flex gap-4 md:gap-8 justify-center">
+    <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'wrap' }}>
       {units.map(({ label, value }, i) => (
-        <div key={label} className="flex flex-col items-center">
-          <div
-            className="wedding-card rounded-lg w-16 md:w-24 h-16 md:h-24 flex items-center justify-center mb-2"
-            style={{
-              boxShadow: i % 2 === 0
-                ? '0 0 18px rgba(212,160,23,0.15), inset 0 0 12px rgba(212,160,23,0.04)'
-                : '0 0 18px rgba(200,200,200,0.10), inset 0 0 12px rgba(200,200,200,0.03)',
-              borderColor: i % 2 === 0 ? 'rgba(212,160,23,0.22)' : 'rgba(200,200,200,0.14)',
-            }}
-          >
-            <span
-              className="text-2xl md:text-4xl font-bold"
-              style={{ color: i % 2 === 0 ? 'var(--gold-light)' : 'var(--silver-light)' }}
-            >
+        <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+          <div style={{ textAlign: 'center', minWidth: '68px' }}>
+            <span className="font-serif" style={{ display: 'block', fontSize: '3.2rem', fontWeight: 300, color: 'white', lineHeight: 1 }}>
               {String(value).padStart(2, '0')}
             </span>
+            <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', color: 'var(--gold)', textTransform: 'uppercase', marginTop: '4px', display: 'block', fontFamily: 'var(--font-lato)' }}>
+              {label}
+            </span>
           </div>
-          <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(200,200,200,0.45)' }}>
-            {label}
-          </span>
+          {i < 3 && (
+            <span className="font-serif" style={{ fontSize: '2.5rem', color: 'rgba(201,168,76,0.4)', paddingTop: '6px' }}>·</span>
+          )}
         </div>
       ))}
     </div>

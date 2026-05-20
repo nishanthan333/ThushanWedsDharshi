@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-const navLinks = [
-  { href: '/',            label: 'Home' },
-  { href: '/events',      label: 'Events' },
-  { href: '/family-tree', label: 'Family' },
-  { href: '/gallery',     label: 'Gallery' },
-  { href: '/rsvp',        label: 'RSVP' },
+const links = [
+  { href: '#story',      label: 'Our Story' },
+  { href: '#ceremonies', label: 'Ceremonies' },
+  { href: '/events',     label: 'Events' },
+  { href: '/family-tree',label: 'Family' },
+  { href: '/gallery',    label: 'Gallery' },
+  { href: '/rsvp',       label: 'RSVP' },
 ];
 
 export default function Navbar() {
@@ -16,68 +17,80 @@ export default function Navbar() {
   const [open, setOpen]         = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handler);
-    return () => window.removeEventListener('scroll', handler);
+    const fn = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        background: scrolled
-          ? 'linear-gradient(180deg, rgba(2,13,6,0.96) 0%, rgba(10,31,16,0.92) 100%)'
-          : 'transparent',
+        position: 'fixed', top: 0, width: '100%', zIndex: 1000,
+        background: scrolled ? 'rgba(250,248,243,0.97)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(212,160,23,0.18)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(201,168,76,0.22)' : 'none',
+        padding: '14px 48px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        transition: 'background 0.4s, border-color 0.4s',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex flex-col items-center">
-          <span className="text-xs tracking-widest" style={{ color: 'var(--gold)' }}>✦ OM ✦</span>
-          <span className="text-lg font-bold tracking-wider gold-glow" style={{ color: 'var(--gold-light)' }}>
-            Thushan & Dharshi
-          </span>
-          <span className="text-xs tracking-widest" style={{ color: 'var(--silver)' }}>01 · 07 · 2026</span>
-        </Link>
+      <Link href="/" className="font-display" style={{ fontSize: '1.7rem', color: scrolled ? 'var(--green-dark)' : 'white', textDecoration: 'none' }}>
+        Thushan &amp; Dharshi
+      </Link>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map(({ href, label }) => (
+      {/* Desktop */}
+      <ul style={{ display: 'flex', gap: '36px', listStyle: 'none' }} className="hidden-mobile">
+        {links.map(({ href, label }) => (
+          <li key={href}>
             <Link
-              key={href}
               href={href}
-              className="text-sm tracking-widest uppercase transition-colors duration-300"
-              style={{ color: 'var(--silver)', letterSpacing: '0.15em' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold-light)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--silver)')}
+              style={{
+                fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.85)',
+                textDecoration: 'none', transition: 'color 0.3s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+              onMouseLeave={e => (e.currentTarget.style.color = scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.85)')}
             >
               {label}
             </Link>
-          ))}
-        </div>
+          </li>
+        ))}
+      </ul>
 
-        {/* Mobile hamburger */}
-        <button className="md:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-          {[0,1,2].map(i => (
-            <span key={i} className="block h-px w-6 transition-all duration-300" style={{ background: 'var(--gold)' }} />
-          ))}
-        </button>
-      </div>
+      {/* Mobile button */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{ display: 'none', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: scrolled ? 'var(--green-dark)' : 'white' }}
+        className="show-mobile"
+        aria-label="Menu"
+      >
+        ☰
+      </button>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden px-6 pb-6 flex flex-col gap-4"
-          style={{ background: 'rgba(2,13,6,0.97)', borderTop: '1px solid rgba(212,160,23,0.15)' }}>
-          {navLinks.map(({ href, label }) => (
-            <Link key={href} href={href} className="text-sm tracking-widest uppercase py-2"
-              style={{ color: 'var(--silver)' }} onClick={() => setOpen(false)}>
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0,
+          background: 'rgba(250,248,243,0.98)', padding: '20px 22px',
+          borderBottom: '1px solid rgba(201,168,76,0.2)',
+          display: 'flex', flexDirection: 'column', gap: '16px',
+        }}>
+          {links.map(({ href, label }) => (
+            <Link key={href} href={href} onClick={() => setOpen(false)}
+              style={{ fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-mid)', textDecoration: 'none' }}>
               {label}
             </Link>
           ))}
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 800px) {
+          .hidden-mobile { display: none !important; }
+          .show-mobile   { display: block !important; }
+        }
+      `}</style>
     </nav>
   );
 }

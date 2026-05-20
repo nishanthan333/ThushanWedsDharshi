@@ -8,7 +8,7 @@ export default function RsvpPage() {
     attending_ceremony: true, attending_reception: true,
     guest_count: 1, dietary: '', message: '',
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus]   = useState<'idle'|'loading'|'success'|'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
@@ -20,7 +20,7 @@ export default function RsvpPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Failed to submit');
+      if (!res.ok) throw new Error();
       setStatus('success');
     } catch {
       setErrorMsg('Something went wrong. Please try again.');
@@ -30,154 +30,113 @@ export default function RsvpPage() {
 
   if (status === 'success') {
     return (
-      <div className="min-h-screen section-dark pt-32 pb-24 px-6 flex items-center justify-center">
-        <div className="text-center max-w-xl">
-          <div className="text-7xl mb-6">🎊</div>
-          <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--gold-light)', fontFamily: 'Georgia, serif' }}>
-            Thank You, {form.name}!
+      <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '480px', padding: '40px 24px' }}>
+          <div style={{ fontSize: '5rem', marginBottom: '24px' }}>🎊</div>
+          <h2 className="font-display" style={{ fontSize: '3.5rem', color: 'var(--green-dark)', marginBottom: '16px' }}>
+            Thank you, {form.name}!
           </h2>
-          <p className="text-lg italic mb-8" style={{ color: 'rgba(255,248,231,0.7)', fontFamily: 'Georgia, serif' }}>
+          <p className="font-serif" style={{ fontSize: '1.1rem', fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: 1.7, marginBottom: '24px' }}>
             Your RSVP has been received. We can&apos;t wait to celebrate with you!
           </p>
-          <p className="text-sm tracking-widest" style={{ color: 'var(--gold)' }}>#ThushanWedsDharshi</p>
+          <p style={{ fontSize: '0.78rem', letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase' }}>
+            #ThushanWedsDharshi
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen section-dark pt-32 pb-24 px-6">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--gold)' }}>✦ You Are Invited ✦</p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: 'var(--cream)', fontFamily: 'Georgia, serif' }}>
-            RSVP
-          </h1>
-          <p className="italic" style={{ color: 'rgba(255,248,231,0.6)' }}>
-            Please let us know you&apos;re coming to celebrate with us.
-          </p>
-        </div>
+    <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
+      {/* Header */}
+      <div style={{ background: 'var(--green-dark)', padding: '120px 48px 60px', textAlign: 'center' }}>
+        <p className="sec-label" style={{ color: 'var(--gold)' }}>You Are Invited</p>
+        <h1 className="font-display" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', color: 'white', marginBottom: '12px' }}>RSVP</h1>
+        <p className="font-serif" style={{ fontSize: '1.1rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.6)' }}>
+          Please let us know you&apos;re coming to celebrate with us.
+        </p>
+      </div>
 
-        <div className="wedding-card rounded-3xl p-8 md:p-12">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                Full Name *
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="Your full name"
-                value={form.name}
-                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-              />
-            </div>
+      <div style={{ maxWidth: '620px', margin: '0 auto', padding: '60px 24px' }}>
+        <div style={{ background: 'white', border: '1px solid rgba(201,168,76,0.28)', padding: '48px 40px' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={form.email}
-                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                />
-              </div>
-              <div>
-                <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+44 000 000 0000"
-                  value={form.phone}
-                  onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                />
-              </div>
+            <Field label="Full Name *">
+              <input type="text" required placeholder="Your full name"
+                value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+            </Field>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <Field label="Email">
+                <input type="email" placeholder="your@email.com"
+                  value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
+              </Field>
+              <Field label="Phone">
+                <input type="tel" placeholder="+44 000 000 0000"
+                  value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
+              </Field>
             </div>
 
             <div>
-              <label className="block text-xs tracking-widest uppercase mb-3" style={{ color: 'var(--gold)' }}>
-                Attending
+              <label style={{ display: 'block', fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '12px', fontFamily: 'var(--font-lato)' }}>
+                I will be attending
               </label>
-              <div className="space-y-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.attending_ceremony}
-                    onChange={e => setForm(f => ({ ...f, attending_ceremony: e.target.checked }))}
-                    className="w-4 h-4"
-                    style={{ width: 'auto', border: 'none' }}
-                  />
-                  <span style={{ color: 'rgba(255,248,231,0.8)' }}>🪔 Hindu Ceremony — Wednesday 1st July 2026</span>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.attending_reception}
-                    onChange={e => setForm(f => ({ ...f, attending_reception: e.target.checked }))}
-                    className="w-4 h-4"
-                    style={{ width: 'auto', border: 'none' }}
-                  />
-                  <span style={{ color: 'rgba(255,248,231,0.8)' }}>✨ Reception Party — Friday 3rd July 2026</span>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                Number of Guests (including yourself)
-              </label>
-              <select
-                value={form.guest_count}
-                onChange={e => setForm(f => ({ ...f, guest_count: Number(e.target.value) }))}
-              >
-                {[1,2,3,4,5].map(n => (
-                  <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {[
+                  { key: 'attending_ceremony', label: '🪔 Hindu Ceremony — Wednesday 1st July 2026' },
+                  { key: 'attending_reception', label: '🥂 Reception Party — Friday 3rd July 2026' },
+                ].map(({ key, label }) => (
+                  <label key={key} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--text-mid)' }}>
+                    <input
+                      type="checkbox"
+                      checked={form[key as 'attending_ceremony'|'attending_reception']}
+                      onChange={e => setForm(f => ({ ...f, [key]: e.target.checked }))}
+                      style={{ width: '16px', height: '16px', accentColor: 'var(--gold)', flexShrink: 0, border: 'none !important', padding: '0 !important' }}
+                    />
+                    {label}
+                  </label>
                 ))}
+              </div>
+            </div>
+
+            <Field label="Number of Guests (including yourself)">
+              <select value={form.guest_count} onChange={e => setForm(f => ({ ...f, guest_count: Number(e.target.value) }))}>
+                {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>)}
               </select>
-            </div>
+            </Field>
 
-            <div>
-              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                Dietary Requirements
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Vegetarian, Vegan, Nut allergy..."
-                value={form.dietary}
-                onChange={e => setForm(f => ({ ...f, dietary: e.target.value }))}
-              />
-            </div>
+            <Field label="Dietary Requirements">
+              <input type="text" placeholder="e.g. Vegetarian, Vegan, Nut allergy…"
+                value={form.dietary} onChange={e => setForm(f => ({ ...f, dietary: e.target.value }))} />
+            </Field>
 
-            <div>
-              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--gold)' }}>
-                Message for the Couple
-              </label>
-              <textarea
-                rows={4}
-                placeholder="Share your wishes for Thushan & Dharshi..."
-                value={form.message}
-                onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-              />
-            </div>
+            <Field label="Message for the Couple">
+              <textarea rows={4} placeholder="Share your wishes for Thushan & Dharshi…"
+                value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} />
+            </Field>
 
             {status === 'error' && (
-              <p className="text-sm text-center" style={{ color: '#FF6B6B' }}>{errorMsg}</p>
+              <p style={{ fontSize: '0.85rem', color: '#c0392b', textAlign: 'center' }}>{errorMsg}</p>
             )}
 
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              className="btn-gold w-full py-4 rounded-full text-sm tracking-widest uppercase"
-            >
-              {status === 'loading' ? 'Sending...' : 'Confirm Attendance ✦'}
+            <button type="submit" disabled={status === 'loading'} className="btn-primary" style={{ textAlign: 'center', border: 'none', width: '100%', padding: '14px' }}>
+              {status === 'loading' ? 'Sending…' : 'Confirm Attendance ✦'}
             </button>
           </form>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label style={{ display: 'block', fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '8px', fontFamily: 'var(--font-lato)' }}>
+        {label}
+      </label>
+      {children}
     </div>
   );
 }

@@ -7,136 +7,76 @@ export default async function EventsPage() {
   const info = getWeddingInfo();
 
   return (
-    <div className="min-h-screen section-dark pt-32 pb-24 px-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.4em] uppercase mb-3" style={{ color: 'var(--gold)' }}>✦ Our Celebrations ✦</p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: 'var(--cream)', fontFamily: 'Georgia, serif' }}>
-            Event Details
-          </h1>
-          <p className="text-sm tracking-widest" style={{ color: 'rgba(255,248,231,0.5)' }}>{info.hashtag}</p>
-        </div>
+    <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
+      {/* Header */}
+      <div style={{ background: 'linear-gradient(155deg, #0C2E1A, #1A5C3A)', padding: '120px 48px 60px', textAlign: 'center' }}>
+        <p className="sec-label" style={{ color: 'var(--gold)' }}>✦ Our Celebrations ✦</p>
+        <h1 className="font-display" style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)', color: 'white', marginBottom: '12px' }}>
+          Event Details
+        </h1>
+        <p style={{ fontSize: '0.8rem', letterSpacing: '0.2em', color: 'rgba(201,168,76,0.65)', textTransform: 'uppercase' }}>
+          {info.hashtag}
+        </p>
+      </div>
 
-        {/* Hindu Ceremony */}
-        <div className="wedding-card rounded-3xl p-10 md:p-16 mb-10 relative overflow-hidden">
-          <div
-            className="absolute top-0 right-0 text-[200px] opacity-5 leading-none pointer-events-none"
-            style={{ color: 'var(--gold)', fontFamily: 'Georgia, serif' }}
-          >ॐ</div>
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '60px 48px' }}>
 
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-5xl">🪔</span>
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: 'var(--gold)' }}>Event One</p>
-              <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--gold-light)', fontFamily: 'Georgia, serif' }}>
-                Hindu Ceremony
-              </h2>
-            </div>
-          </div>
+        {/* Ceremony */}
+        <EventCard
+          icon="🪔" badge="Event One" title="Hindu Ceremony"
+          date="Wednesday, 1st July 2026" time={info.ceremony_time}
+          venue={info.ceremony_venue} address={info.ceremony_address}
+          about="Witness the sacred union as Thushan and Dharshi exchange their vows in a traditional Hindu ceremony, filled with ancient Vedic rituals, sacred fire, flowers, and the blessings of both families."
+          dress="Traditional or semi-formal. Ladies are welcome in saree or salwar kameez. Gentlemen in sherwani, kurta-pajama, or formal wear."
+          schedule={[
+            { time: '9:30 AM', event: 'Guests Arrive & Ganesh Pooja', icon: '🌸' },
+            { time: '10:00 AM', event: 'Main Ceremony Begins', icon: '🔥' },
+            { time: '11:00 AM', event: 'Muhurtham — Sacred Union', icon: '💍' },
+            { time: '12:00 PM', event: 'Sapthapadi & Blessings', icon: '👣' },
+            { time: '12:30 PM', event: 'Photography & Family Portraits', icon: '📸' },
+            { time: '1:00 PM', event: 'Celebratory Lunch', icon: '🍽️' },
+          ]}
+        />
 
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="space-y-6">
-              <InfoRow icon="📅" label="Date" value="Wednesday, 1st July 2026" />
-              <InfoRow icon="⏰" label="Time" value={info.ceremony_time} />
-              <InfoRow icon="📍" label="Venue" value={info.ceremony_venue} />
-              {info.ceremony_address && <InfoRow icon="🗺️" label="Address" value={info.ceremony_address} />}
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--gold)' }}>About the Ceremony</h3>
-              <p className="leading-relaxed mb-4" style={{ color: 'rgba(255,248,231,0.75)', fontStyle: 'italic' }}>
-                Witness the sacred union as Thushan and Dharshi exchange their vows in a traditional Hindu ceremony,
-                filled with ancient Vedic rituals, sacred fire, beautiful flowers, and the blessings of family.
-              </p>
-              <p className="leading-relaxed" style={{ color: 'rgba(255,248,231,0.6)', fontSize: '0.9rem' }}>
-                Guests are invited to dress in traditional or semi-formal attire. Ladies are welcome in saree or
-                salwar kameez. Gentlemen in sherwani, kurta-pajama, or formal wear.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10">
-            <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--gold)' }}>Ceremony Schedule</h3>
-            <div className="grid md:grid-cols-3 gap-4">
-              {ceremonySchedule.map(item => (
-                <ScheduleItem key={item.time} {...item} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <div style={{ height: '32px' }} />
 
         {/* Reception */}
-        <div className="wedding-card rounded-3xl p-10 md:p-16 mb-10 relative overflow-hidden">
-          <div
-            className="absolute top-0 right-0 text-[200px] opacity-5 leading-none pointer-events-none"
-            style={{ color: 'var(--gold-light)' }}
-          >✨</div>
+        <EventCard
+          icon="🥂" badge="Event Two" title="Reception Party"
+          date="Friday, 3rd July 2026" time={info.reception_time}
+          venue={info.reception_venue} address={info.reception_address}
+          about="Join the newly wed couple for an unforgettable evening of celebration. An elegant reception with dinner, dancing, heartfelt speeches and memories to last a lifetime."
+          dress="Smart formal or semi-formal. Please avoid all-white or all-black outfits. Come ready to dance!"
+          schedule={[
+            { time: '5:30 PM', event: 'Guests Arrive', icon: '🌿' },
+            { time: '6:00 PM', event: 'Reception Opens', icon: '✨' },
+            { time: '6:30 PM', event: 'Couple\'s Grand Entry', icon: '💫' },
+            { time: '7:00 PM', event: 'Dinner Served', icon: '🍽️' },
+            { time: '8:00 PM', event: 'Speeches & Toasts', icon: '🎙️' },
+            { time: '8:30 PM', event: 'Dancing & Celebration', icon: '🎊' },
+          ]}
+        />
 
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-5xl">🥂</span>
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: 'var(--gold)' }}>Event Two</p>
-              <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--gold-light)', fontFamily: 'Georgia, serif' }}>
-                Reception Party
-              </h2>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="space-y-6">
-              <InfoRow icon="📅" label="Date" value="Friday, 3rd July 2026" />
-              <InfoRow icon="⏰" label="Time" value={info.reception_time} />
-              <InfoRow icon="📍" label="Venue" value={info.reception_venue} />
-              {info.reception_address && <InfoRow icon="🗺️" label="Address" value={info.reception_address} />}
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--gold)' }}>About the Reception</h3>
-              <p className="leading-relaxed mb-4" style={{ color: 'rgba(255,248,231,0.75)', fontStyle: 'italic' }}>
-                Join the newly wed couple for an unforgettable evening of celebration! An elegant reception
-                with dinner, dancing, music, and memories that will last a lifetime.
-              </p>
-              <p className="leading-relaxed" style={{ color: 'rgba(255,248,231,0.6)', fontSize: '0.9rem' }}>
-                Smart formal or semi-formal dress code. The evening will feature dinner, speeches,
-                music, and dancing. Come ready to celebrate!
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10">
-            <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--gold)' }}>Evening Schedule</h3>
-            <div className="grid md:grid-cols-3 gap-4">
-              {receptionSchedule.map(item => (
-                <ScheduleItem key={item.time} {...item} />
-              ))}
-            </div>
-          </div>
+        {/* Info cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '40px', marginBottom: '48px' }}>
+          <InfoCard title="👗 Dress Code" items={[
+            'Ceremony: Traditional or semi-formal',
+            'Ladies: Saree, Salwar Kameez, or formal gown',
+            'Gentlemen: Sherwani, Kurta-Pajama, or suit',
+            'Reception: Smart formal or semi-formal',
+            'Please avoid all-white or all-black outfits',
+          ]} />
+          <InfoCard title="ℹ️ Good to Know" items={[
+            'Please RSVP by the deadline',
+            'Dietary requirements fully accommodated',
+            'Photography warmly welcome',
+            'Both events are fully catered',
+            'Children are welcome at both events',
+          ]} />
         </div>
 
-        {/* Dress code & info */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="wedding-card rounded-2xl p-8">
-            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--gold)' }}>👗 Dress Code</h3>
-            <ul className="space-y-2" style={{ color: 'rgba(255,248,231,0.75)', fontSize: '0.9rem' }}>
-              <li>• Ceremony: Traditional or Semi-formal</li>
-              <li>• Ladies: Saree, Salwar Kameez, or formal gown</li>
-              <li>• Gentlemen: Sherwani, Kurta-Pajama, or suit</li>
-              <li>• Reception: Smart formal or semi-formal</li>
-              <li>• No white or black please (for reception)</li>
-            </ul>
-          </div>
-          <div className="wedding-card rounded-2xl p-8">
-            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--gold)' }}>ℹ️ Good to Know</h3>
-            <ul className="space-y-2" style={{ color: 'rgba(255,248,231,0.75)', fontSize: '0.9rem' }}>
-              <li>• Please RSVP by the deadline</li>
-              <li>• Dietary requirements accommodated</li>
-              <li>• Photography is welcome</li>
-              <li>• Both events are fully catered</li>
-              <li>• Children are welcome at both events</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <Link href="/rsvp" className="btn-gold px-12 py-4 rounded-full text-sm tracking-widest uppercase">
+        <div style={{ textAlign: 'center' }}>
+          <Link href="/rsvp" className="btn-primary" style={{ padding: '14px 48px' }}>
             RSVP for Both Events
           </Link>
         </div>
@@ -145,41 +85,78 @@ export default async function EventsPage() {
   );
 }
 
-function InfoRow({ icon, label, value }: { icon: string; label: string; value: string }) {
+function EventCard({ icon, badge, title, date, time, venue, address, about, dress, schedule }: {
+  icon: string; badge: string; title: string; date: string; time: string;
+  venue: string; address: string; about: string; dress: string;
+  schedule: { time: string; event: string; icon: string }[];
+}) {
   return (
-    <div>
-      <p className="text-xs tracking-widest uppercase mb-1" style={{ color: 'rgba(255,248,231,0.4)' }}>{label}</p>
-      <p className="text-lg" style={{ color: 'var(--cream)' }}>
-        <span className="mr-2">{icon}</span>{value}
-      </p>
+    <div style={{ border: '1px solid rgba(201,168,76,0.28)', background: 'white', overflow: 'hidden' }}>
+      {/* Header band */}
+      <div style={{ background: 'var(--green-dark)', padding: '28px 36px', display: 'flex', alignItems: 'center', gap: '18px' }}>
+        <span style={{ fontSize: '2.5rem' }}>{icon}</span>
+        <div>
+          <p style={{ fontSize: '0.63rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '4px' }}>{badge}</p>
+          <h2 className="font-serif" style={{ fontSize: '1.9rem', color: 'white', fontWeight: 400 }}>{title}</h2>
+        </div>
+      </div>
+
+      <div style={{ padding: '36px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '36px' }}>
+        <div>
+          <h3 style={{ fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px', fontFamily: 'var(--font-lato)' }}>Details</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+            <Row icon="📅" value={date} />
+            <Row icon="⏰" value={time} />
+            <Row icon="📍" value={venue} />
+            {address && <Row icon="🗺️" value={address} small />}
+          </div>
+          <div style={{ borderTop: '1px solid var(--green-light)', paddingTop: '20px' }}>
+            <h3 style={{ fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '12px', fontFamily: 'var(--font-lato)' }}>About</h3>
+            <p style={{ fontSize: '0.88rem', lineHeight: 1.78, color: 'var(--text-mid)', marginBottom: '12px' }}>{about}</p>
+            <p style={{ fontSize: '0.82rem', lineHeight: 1.7, color: 'var(--text-mid)', fontStyle: 'italic' }}><strong>Dress:</strong> {dress}</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 style={{ fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px', fontFamily: 'var(--font-lato)' }}>Schedule</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {schedule.map(s => (
+              <div key={s.time} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '10px 12px', background: 'var(--green-light)', border: '1px solid rgba(201,168,76,0.12)' }}>
+                <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{s.icon}</span>
+                <div>
+                  <p style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: '2px' }}>{s.time}</p>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-dark)' }}>{s.event}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-function ScheduleItem({ time, event, icon }: { time: string; event: string; icon: string }) {
+function Row({ icon, value, small }: { icon: string; value: string; small?: boolean }) {
   return (
-    <div className="p-4 rounded-xl" style={{ background: 'rgba(212,160,23,0.05)', border: '1px solid rgba(212,160,23,0.1)' }}>
-      <span className="text-xl mb-2 block">{icon}</span>
-      <p className="text-xs tracking-widest mb-1" style={{ color: 'var(--gold)' }}>{time}</p>
-      <p className="text-sm" style={{ color: 'rgba(255,248,231,0.8)' }}>{event}</p>
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+      <span style={{ fontSize: '1rem', flexShrink: 0 }}>{icon}</span>
+      <p style={{ fontSize: small ? '0.82rem' : '0.9rem', color: small ? 'var(--text-mid)' : 'var(--text-dark)', lineHeight: 1.5 }}>{value}</p>
     </div>
   );
 }
 
-const ceremonySchedule = [
-  { time: '9:30 AM', event: 'Guests Arrive & Blessing', icon: '🌸' },
-  { time: '10:00 AM', event: 'Ceremony Begins', icon: '🔥' },
-  { time: '11:30 AM', event: 'Sacred Vows & Rituals', icon: '💍' },
-  { time: '12:30 PM', event: 'Photo Time', icon: '📸' },
-  { time: '1:00 PM', event: 'Celebratory Lunch', icon: '🍽️' },
-  { time: '3:00 PM', event: 'Farewell & Blessings', icon: '🪷' },
-];
-
-const receptionSchedule = [
-  { time: '5:30 PM', event: 'Guests Arrive', icon: '🥂' },
-  { time: '6:00 PM', event: 'Reception Begins', icon: '✨' },
-  { time: '6:30 PM', event: 'Couple\'s Grand Entry', icon: '💫' },
-  { time: '7:00 PM', event: 'Dinner Served', icon: '🍽️' },
-  { time: '8:00 PM', event: 'Speeches & Toasts', icon: '🎙️' },
-  { time: '8:30 PM', event: 'Dancing & Celebration', icon: '🎊' },
-];
+function InfoCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div style={{ border: '1px solid rgba(201,168,76,0.22)', padding: '28px 26px', background: 'var(--green-light)' }}>
+      <h3 className="font-serif" style={{ fontSize: '1.1rem', color: 'var(--green-dark)', marginBottom: '16px', fontWeight: 600 }}>{title}</h3>
+      <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {items.map((item, i) => (
+          <li key={i} style={{ fontSize: '0.85rem', color: 'var(--text-mid)', paddingLeft: '12px', position: 'relative' }}>
+            <span style={{ position: 'absolute', left: 0, color: 'var(--gold)' }}>·</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
