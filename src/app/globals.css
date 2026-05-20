@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+:root {
+  --saffron: #FF6B35;
+  --gold: #D4A017;
+  --gold-light: #FFD700;
+  --maroon: #7B1C1C;
+  --deep-red: #9B1B30;
+  --cream: #FFF8E7;
+  --ivory: #FFFFF0;
+  --deep-purple: #3D0C5E;
+  --rose: #E8B4B8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0205;
+  color: var(--cream);
+  font-family: 'Georgia', serif;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0205; }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+.text-gold { color: var(--gold-light); }
+.text-saffron { color: var(--saffron); }
+
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--gold);
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gold-glow {
+  text-shadow: 0 0 20px rgba(212, 160, 23, 0.5), 0 0 40px rgba(212, 160, 23, 0.3);
+}
+
+.section-dark {
+  background: linear-gradient(180deg, #0a0205 0%, #12040a 50%, #0a0205 100%);
+}
+
+.section-medium {
+  background: linear-gradient(180deg, #12040a 0%, #1a0610 50%, #12040a 100%);
+}
+
+.wedding-card {
+  background: linear-gradient(135deg, rgba(212, 160, 23, 0.05), rgba(155, 27, 48, 0.05));
+  border: 1px solid rgba(212, 160, 23, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #B8860B, #D4A017, #FFD700, #D4A017, #B8860B);
+  background-size: 200% auto;
+  color: #1a0a00;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-gold:hover {
+  background-position: right center;
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.5);
+}
+
+.btn-outline-gold {
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-outline-gold:hover {
+  background: rgba(212, 160, 23, 0.1);
+  box-shadow: 0 0 15px rgba(212, 160, 23, 0.3);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 160, 23, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(212, 160, 23, 0.7), 0 0 50px rgba(212, 160, 23, 0.3); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes petal-fall {
+  0% { transform: translateY(-100px) rotate(0deg) translateX(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg) translateX(100px); opacity: 0; }
+}
+
+@keyframes diya-flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  25% { opacity: 0.85; transform: scaleY(0.95) scaleX(1.05); }
+  50% { opacity: 0.95; transform: scaleY(1.05) scaleX(0.98); }
+  75% { opacity: 0.9; transform: scaleY(0.98) scaleX(1.02); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
+.animate-rotate-slow { animation: rotate-slow 20s linear infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--saffron), var(--gold-light), var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #1a0610 0%, #0a0205 100%);
+  border-right: 1px solid rgba(212, 160, 23, 0.2);
+}
+
+input, textarea, select {
+  background: rgba(255, 248, 231, 0.05) !important;
+  border: 1px solid rgba(212, 160, 23, 0.3) !important;
+  color: #FFF8E7 !important;
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: rgba(212, 160, 23, 0.7) !important;
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.15);
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 248, 231, 0.3);
+}
